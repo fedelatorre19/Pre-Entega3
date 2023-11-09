@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+}
+
+#formulario {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 20px;
+}
+
+#historico {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 20px;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+li {
+    margin-bottom: 10px;
+}
+
+img {
+    max-width: 100px;
+}
+

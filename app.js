@@ -1,37 +1,56 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const nombreEjercicio = document.getElementById("nombreEjercicio");
-    const seriesInput = document.getElementById("series");
-    const listaEjercicios = document.getElementById("listaEjercicios");
+let rutina = [];
 
-    const ejercicios = [];
+function generarInputs() {
+    const series = parseInt(document.getElementById('seriesInput').value);
+    const ejerciciosSection = document.getElementById('ejerciciosSection');
 
-    document.getElementById("agregarEjercicio").addEventListener("click", function() {
-        const ejercicio = {
-            nombre: nombreEjercicio.value,
-            series: seriesInput.value,
-            cargas: [],
-            repeticiones: []
-        };
-
-        // Generar campos de carga y repeticiones según la cantidad de series
-        for (let i = 0; i < ejercicio.series; i++) {
-            ejercicio.cargas.push(prompt(`Carga para la serie ${i + 1}:`));
-            ejercicio.repeticiones.push(prompt(`Repeticiones para la serie ${i + 1}:`));
-        }
-
-        ejercicios.push(ejercicio);
-
-        // Mostrar el ejercicio en la lista
-        const li = document.createElement("li");
-        li.innerHTML = `
-            <h3>${ejercicio.nombre}</h3>
-            <p>Cargas: ${ejercicio.cargas.join('KG, ')}</p>
-            <p>Repeticiones: ${ejercicio.repeticiones.join(', ')}</p>
+    ejerciciosSection.innerHTML = '';
+    for (let i = 1; i <= series; i++) {
+        const ejercicioDiv = document.createElement('div');
+        ejercicioDiv.innerHTML = `
+            <h3>Ejercicio ${i}</h3>
+            <label for="pesoEjercicio${i}">Peso (kg):</label>
+            <input type="number" id="pesoEjercicio${i}">
+            <label for="repeticionesEjercicio${i}">Repeticiones:</label>
+            <input type="number" id="repeticionesEjercicio${i}">
         `;
-        listaEjercicios.appendChild(li);
+        ejerciciosSection.appendChild(ejercicioDiv);
+    }
+}
 
-        // Limpiar los campos del formulario
-        nombreEjercicio.value = "";
-        seriesInput.value = "";
+function agregarOtroEjercicio() {
+    const zonaCuerpo = document.getElementById('zonaCuerpo').value;
+    const nombreEjercicio = document.getElementById('nombreEjercicio').value;
+
+    const ejerciciosSection = document.getElementById('ejerciciosSection');
+    const ejercicios = ejerciciosSection.getElementsByTagName('div');
+    const datosEjercicios = [];
+
+    for (let i = 0; i < ejercicios.length; i++) {
+        const peso = document.getElementById(`pesoEjercicio${i + 1}`).value;
+        const repeticiones = document.getElementById(`repeticionesEjercicio${i + 1}`).value;
+
+        datosEjercicios.push({ peso, repeticiones });
+    }
+
+    
+    const ejercicioInfoDiv = document.createElement('div');
+    ejercicioInfoDiv.innerHTML = `
+        <p>Zona del Cuerpo: ${zonaCuerpo}</p>
+        <p>Nombre del Ejercicio: ${nombreEjercicio}</p>
+    `;
+
+    datosEjercicios.forEach((dato, i) => {
+        ejercicioInfoDiv.innerHTML += `
+            <p>Ejercicio ${i + 1}: Peso: ${dato.peso} kg, Repeticiones: ${dato.repeticiones}</p>
+        `;
     });
-});
+
+    ejerciciosSection.appendChild(ejercicioInfoDiv);
+}
+
+
+function finalizarRutina() {
+    
+    alert('Rutina finalizada');
+}
